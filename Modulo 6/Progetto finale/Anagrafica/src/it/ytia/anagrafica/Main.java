@@ -21,7 +21,7 @@ package it.ytia.anagrafica;
 	
 
 import java.io.File;
-import java.net.URISyntaxException;
+import java.util.List;
 
 import it.ytia.anagrafica.fx.SceneBuilder;
 import it.ytia.anagrafica.logica.Anagrafica;
@@ -35,28 +35,27 @@ import javafx.stage.Stage;
  * @author Livio Pompianu
  */
 public class Main extends Application {
-	Anagrafica anagrafica;
-	
 	
 	@Override
 	public void start(Stage primaryStage) {
+		List<String> parameters = getParameters().getRaw();
 		
-		try {
-			File file = new File(getClass().getClassLoader().getResource("anagrafica.txt").toURI());
-
-			this.anagrafica = new Anagrafica(file);		
-			
-			/*
-			 * La costruzione degli elementi grafici delle scene
-			 * avviene in una classe separata che possiede un metodo
-			 * per ogni scena da creare e riceve tramite costruttore 
-			 * lo stage e l'anagrafica da aggiornare e stampare
-			 */
-			SceneBuilder builder = new SceneBuilder(primaryStage, anagrafica);
-		
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
+		if (parameters.size() == 0) {
+			System.out.println("Specificare un file per l'anagrafica");
+			System.exit(1);
 		}
+		
+		File file = new File(parameters.get(0));
+		Anagrafica anagrafica = new Anagrafica(file);		
+		
+		/*
+		 * La costruzione degli elementi grafici delle scene
+		 * avviene in una classe separata che possiede un metodo
+		 * per ogni scena da creare e riceve tramite costruttore 
+		 * lo stage e l'anagrafica da aggiornare e stampare
+		 */
+		SceneBuilder builder = new SceneBuilder(primaryStage, anagrafica);
+		builder.show();
 	}
 	
 	public static void main(String[] args) {

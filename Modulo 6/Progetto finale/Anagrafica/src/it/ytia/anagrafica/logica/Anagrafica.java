@@ -27,6 +27,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.util.TreeSet;
 
@@ -74,6 +76,7 @@ public class Anagrafica {
 		// Inizializzazione dell struttura anagrafica
 		anagrafica = new TreeSet<>();
 		
+		
 		// Spostiamo le operazioni di lettura da file in una funzione privata di lavoro
 		initFromFile();
 	}
@@ -86,6 +89,15 @@ public class Anagrafica {
 	 * @param filePath Percorso e nome del file da utilizzare per l'inizializzazione
 	 * */
 	private void initFromFile() {
+		
+		try {
+			if (!this.filePath.exists()) {
+					this.filePath.createNewFile();
+			}
+		} catch (IOException e) {
+			throw new RuntimeException("Caricamento anagrafica fallito - Non posso creare un nuovo file " + filePath);
+		}
+		
 		
 		/* 
 		 * Try with resources: le risorse vengono dichiarate dentro il try e chiuse
@@ -106,6 +118,8 @@ public class Anagrafica {
 					break;
 					case 6: anagrafica.add(new Impiegato(temp[0], temp[1], Integer.parseInt(temp[2]), Integer.parseInt(temp[3]), Integer.parseInt(temp[4]), Integer.parseInt(temp[5])));
 					break;
+					case 7: anagrafica.add(new Docente(temp[0], temp[1], Integer.parseInt(temp[2]), Integer.parseInt(temp[3]), Integer.parseInt(temp[4]), Integer.parseInt(temp[5]), Arrays.asList(temp[6].split("-"))));
+					break;
 					default: throw new RuntimeException("Caricamento anagrafica fallito - Formattazione del file " + filePath + " non valida");
 				}
 			}
@@ -121,9 +135,8 @@ public class Anagrafica {
 	 * Salva il contenuto corrente della struttra dati anagrafica in un file 
 	 * di output fornito dal chiamante
 	 * 
-	 * @param filePath Percorso e nome del file da utilizzare per il salvataggio dei dati
 	 */
-	public void salvaAnagrafica(String filePath) {
+	public void salvaAnagrafica() {
 		
 		/* 
 		 * Try with resources: le risorse vengono dichiarate dentro il try e chiuse
@@ -156,7 +169,7 @@ public class Anagrafica {
 				// Se si tratta di un docente dobbiamo fornire anche gli esami
 				if(p instanceof Docente) {
 					Docente d = (Docente) p;
-					ArrayList<String> esami = d.getEsami();
+					List<String> esami = d.getEsami();
 					for(String e : esami) {
 						temp += "-" + e;
 					}

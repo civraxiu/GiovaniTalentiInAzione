@@ -19,12 +19,12 @@
 
 package it.ytia.anagrafica.logica.persone;
 
-import java.util.ArrayList;
+import java.util.List;
 
 
 public class Docente extends Impiegato{
 	
-	private ArrayList<String> esami;
+	private List<String> esami;
 	
 	public Docente(
 			String nome,
@@ -33,7 +33,7 @@ public class Docente extends Impiegato{
 			int mese,
 			int anno,
 			int stipendio,
-			ArrayList<String> esami
+			List<String> esami
 	) {
 		super(nome, cognome, giorno, mese, anno, stipendio);
 		this.esami = esami;
@@ -46,7 +46,7 @@ public class Docente extends Impiegato{
 		return output;
 	}
 	
-	public ArrayList<String> getEsami(){
+	public List<String> getEsami(){
 		return this.esami;
 	}
 }

@@ -22,7 +22,6 @@ package it.ytia.anagrafica.fx;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
-import it.ytia.anagrafica.Main;
 import it.ytia.anagrafica.logica.Anagrafica;
 import it.ytia.anagrafica.logica.persone.Docente;
 import it.ytia.anagrafica.logica.persone.Impiegato;
@@ -41,8 +40,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
@@ -67,21 +64,21 @@ public class SceneBuilder {
 	private Scene mainScene;
 	private Scene inputScene;
 	
-	
 	public SceneBuilder(Stage primaryStage, Anagrafica anagrafica){
 		this.primaryStage = primaryStage;
 		this.anagrafica = anagrafica;
 		
 		mainScene = this.buildMainScene();
 		inputScene = this.buildInputScene();
-		
+
 		// Visualizza lo stage impostando come scena attuale quella principale
 		primaryStage.setScene(mainScene);
 		primaryStage.setTitle("Anagrafica");
-        primaryStage.show();
 	}
 	
-	
+	public void show() {
+		primaryStage.show();
+	}
 	
 	private Scene buildMainScene() {
 		
@@ -281,6 +278,18 @@ public class SceneBuilder {
             			Integer.parseInt(annoTextField.getText())
             			));                	
                 }
+                
+                // Pulizia dei campi per dare una risposta grafica all'utente in seguito alla pressione del bottone
+                nomeTextField.setText("");
+                cognomeTextField.setText("");
+                giornoTextField.setText("");
+                meseTextField.setText("");
+                annoTextField.setText("");
+                stipendioTextField.setText("");
+                esamiTextField.setText("");
+                
+                // Aggiorna il file Anagrafica con il nuovo campo
+                anagrafica.salvaAnagrafica();
             }
         });
         
@@ -294,11 +303,11 @@ public class SceneBuilder {
 		final double MAX_WIDTH = 200;
 
 		Button outputToMain = new Button("Indietro");
+		BorderPane.setMargin(outputToMain, new Insets(10, 0, 10, 0));
 		
 		// Costruiamo il pannello di base che conterrà tutti gli elementi della scena
         BorderPane pane = new BorderPane();
         pane.setPadding(new Insets(25, 25, 25, 25));
-        pane.setPadding(new Insets(10, 10, 10, 10));
         
         // Definiamo l'oggetto scena da rendere in uscita
 		Scene outputScene = new Scene(pane, 500, 400);
