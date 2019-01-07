@@ -25,6 +25,8 @@ public class JUnitTestEsempioAssertion {
 
         assertTrue('a' < 'b', () -> "Assertion messages can be lazily evaluated -- "
                 + "to avoid constructing complex messages unnecessarily.");
+        
+        assertTrue(3 < 5 && 5 < 6);
     }
 
     @Test
