@@ -6,7 +6,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.ytia.anagrafica.logica.Anagrafica;
@@ -20,7 +20,7 @@ public class JUnitTestAnagrafica {
 	private static List<String> esami;
 	
 	
-    @BeforeAll
+    @BeforeEach
     static void docente() {
 
     	anagrafica = new Anagrafica(new File("anagrafica.txt"));
